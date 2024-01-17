@@ -1,0 +1,3 @@
+name: jenkins-deployment
+runtime: go
+description: A Jenkins deployment in Go
