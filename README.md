@@ -4,7 +4,8 @@ Setup Jenkins on a Minikube Kubernetes cluster using Pulumi's Infrastructure as 
 ## Prerequisites
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - [Minikube](https://minikube.sigs.k8s.io/docs/start)
-- [Pulumi](https://www.pulumi.com/docs/install/) or [kubectl](https://kubernetes.io/docs/tasks/tools/)
+- [kubectl](https://kubernetes.io/docs/tasks/tools/)
+- [Pulumi](https://www.pulumi.com/docs/install/) (optional, or use kubectl alone) 
 
 ### Change To Working Directory
 Pulumi:
