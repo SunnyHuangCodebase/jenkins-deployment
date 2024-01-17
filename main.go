@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/pulumi/pulumi-command/sdk/go/command/local"
 	apps "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/apps/v1"
 	core "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/core/v1"
 	meta "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/meta/v1"
@@ -73,7 +74,16 @@ func main() {
 
 		ctx.Export("name", deployment.Metadata.Name())
 		ctx.Export("frontendIp", frontend.Spec.ClusterIP())
-		//TODO: Add authorization key export
+
+		authorization, err := local.NewCommand(ctx, "authorization", &local.CommandArgs{
+			Create: pulumi.String("kubectl exec -i `kubectl get pod -o name | grep jenkins` -- sh -c 'cat /var/jenkins_home/secrets/initialAdminPassword'"),
+		}, pulumi.DependsOn([]pulumi.Resource{deployment, frontend}))
+
+		if err != nil {
+			return err
+		}
+
+		ctx.Export("jenkinsPassword", authorization.Stdout)
 
 		return nil
 	})
